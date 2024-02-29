@@ -14,7 +14,7 @@ public class Address {
     private String city;
     @Column(nullable = false)
     private String zipcode;
-    private String test;
+
 
     protected Address() {
     }
