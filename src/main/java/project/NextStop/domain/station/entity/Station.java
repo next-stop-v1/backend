@@ -1,10 +1,15 @@
 package project.NextStop.domain.station.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.BatchSize;
+import project.NextStop.domain.exit.entity.Exit;
 import project.NextStop.util.valuetype.Address;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,12 +26,22 @@ public class Station {
     @Column(nullable = false)
     private Address address;
 
-    @Column(nullable = false, precision = 21, scale = 18)
-    private BigDecimal latitude;
-
-    @Column(nullable = false, precision = 21, scale = 18)
-    private BigDecimal longitude;
-
     @Column(nullable = false)
     private Boolean isExpress;
+
+    @OneToMany(mappedBy = "station")
+    @BatchSize(size = 500)
+    private List<Exit> exits = new ArrayList<>();
+
+    protected Station() {
+    }
+
+    @Builder
+    public Station(String name, Address address, Boolean isExpress){
+        this.name = name;
+        this.address = address;
+        this.isExpress = isExpress;
+    }
+
+
 }

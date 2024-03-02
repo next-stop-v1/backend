@@ -16,4 +16,6 @@ public class Line {
 
     @Column(nullable = false)
     private String tel;
+
+
 }

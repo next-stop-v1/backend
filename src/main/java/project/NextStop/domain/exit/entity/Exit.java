@@ -1,6 +1,7 @@
 package project.NextStop.domain.exit.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import project.NextStop.domain.station.entity.Station;
 
@@ -22,4 +23,18 @@ public class Exit {
 
     @Column(nullable = false)
     private String name;
+
+    protected Exit() {
+    }
+
+    @Builder
+    public Exit(int number, String name) {
+        this.number = number;
+        this.name = name;
+    }
+    //=== 연관관계 메서드 ===//
+    public void addStation(Station station){
+        this.station = station;
+        station.getExits().add(this);
+    }
 }
