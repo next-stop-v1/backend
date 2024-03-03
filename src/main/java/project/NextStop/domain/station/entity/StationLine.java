@@ -1,7 +1,9 @@
 package project.NextStop.domain.station.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.BatchSize;
 import project.NextStop.domain.line.entity.Line;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class StationLine {
     private StationLine previous;
 
     @OneToMany(mappedBy = "previous")
+    @BatchSize(size = 500)
     private List<StationLine> previousStationLines = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,5 +42,26 @@ public class StationLine {
     private StationLine next;
 
     @OneToMany(mappedBy = "next")
+    @BatchSize(size = 500)
     private List<StationLine> nextStationLines= new ArrayList<>();
+
+    protected StationLine() {
+    }
+
+    @Builder
+    public StationLine(Station station, String doorDirection){
+        this.station = station;
+        this.doorDirection = doorDirection;
+    }
+
+    //=== 연관관계 메서드 ===//
+    public void addPrevious(StationLine previous){
+        this.previous = previous;
+        previousStationLines.add(previous);
+    }
+
+    public void addNext(StationLine next){
+        this.next = next;
+        nextStationLines.add(next);
+    }
 }

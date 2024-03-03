@@ -1,6 +1,7 @@
 package project.NextStop.domain.schedule.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import project.NextStop.domain.station.entity.StationLine;
 import project.NextStop.domain.subway.entity.Subway;
@@ -31,4 +32,16 @@ public class Schedule {
 
     @Column(nullable = false)
     private String direction;
+
+    protected Schedule() {
+    }
+
+    @Builder
+    public Schedule(StationLine stationLine, Subway subway, String dayStatus, LocalTime arriveTime, String direction){
+        this.stationLine = stationLine;
+        this.subway = subway;
+        this.dayStatus = dayStatus;
+        this.arriveTime = arriveTime;
+        this.direction = direction;
+    }
 }

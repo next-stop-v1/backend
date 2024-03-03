@@ -1,6 +1,7 @@
 package project.NextStop.domain.subway.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -17,4 +18,13 @@ public class Subway {
 
     @Column(nullable = false)
     private Boolean isRapid;
+
+    protected Subway() {
+    }
+
+    @Builder
+    public Subway(int number,Boolean isRapid){
+        this.number = number;
+        this.isRapid = isRapid;
+    }
 }
