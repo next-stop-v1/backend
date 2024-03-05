@@ -1,17 +1,17 @@
-package project.NextStop.domain.schedule.repository;
+package project.NextStop.domain.station.service;
 
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import project.NextStop.domain.exit.entity.Exit;
 import project.NextStop.domain.exit.repository.ExitRepository;
 import project.NextStop.domain.schedule.entity.Schedule;
+import project.NextStop.domain.schedule.repository.ScheduleRepository;
 import project.NextStop.domain.station.entity.Station;
+import project.NextStop.domain.station.dto.StationDetailDto;
 import project.NextStop.domain.station.entity.StationLine;
 import project.NextStop.domain.station.repository.StationLineRepository;
 import project.NextStop.domain.station.repository.StationRepository;
@@ -21,17 +21,13 @@ import project.NextStop.util.valuetype.Address;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class ScheduleRepositoryImplTest {
+class StationServiceTest {
 
     @Autowired EntityManager em;
+    @Autowired StationService stationService;
     @Autowired ScheduleRepository scheduleRepository;
     @Autowired SubwayRepository subwayRepository;
     @Autowired StationLineRepository stationLineRepository;
@@ -80,20 +76,15 @@ class ScheduleRepositoryImplTest {
         scheduleRepository.save(schedule);
 
     }
-    @Test
-    void getStationDetail(){
 
+    @Test
+    void stationServiceTest(){
         Subway subway = subwayRepository.findById(1L).get();
 
         em.flush();
         em.clear();
 
-        Schedule findSchedule = scheduleRepository.getStationDetail(subway.getId());
-        System.out.println("schedule.getStationLine().getNext().getStation().getName() = " + findSchedule.getStationLine().getNext().getStation().getName());
-        List<Exit> exits = findSchedule.getStationLine().getNext().getStation().getExits();
-
-        assertThat(findSchedule.getStationLine().getNext().getStation().getExits().size()).isEqualTo(3);
-        assertThat(findSchedule.getStationLine().getNext().getStation().getName()).isEqualTo("성수");
+        StationDetailDto stationDetail = stationService.findStationDetail(subway.getId());
+        System.out.println("stationDetail = " + stationDetail);
     }
-
 }

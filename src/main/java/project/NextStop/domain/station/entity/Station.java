@@ -33,14 +33,23 @@ public class Station {
     @BatchSize(size = 500)
     private List<Exit> exits = new ArrayList<>();
 
-    protected Station() {
+    @Column(nullable = false, precision = 21, scale = 18)
+    private BigDecimal latitude;
+
+    @Column(nullable = false, precision = 21, scale = 18)
+    private BigDecimal longitude;
+
+    protected Station(){
+
     }
 
     @Builder
-    public Station(String name, Address address, Boolean isExpress){
+    public Station(String name, Address address, Boolean isExpress, BigDecimal latitude, BigDecimal longitude){
         this.name = name;
         this.address = address;
         this.isExpress = isExpress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
