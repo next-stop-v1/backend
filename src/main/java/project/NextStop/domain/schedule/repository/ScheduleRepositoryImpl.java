@@ -1,15 +1,7 @@
 package project.NextStop.domain.schedule.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
-import project.NextStop.domain.schedule.entity.QSchedule;
 import project.NextStop.domain.schedule.entity.Schedule;
-import project.NextStop.domain.station.entity.QStation;
-import project.NextStop.domain.station.entity.QStationLine;
-import project.NextStop.domain.station.entity.Station;
-import project.NextStop.domain.subway.entity.QSubway;
-
-import java.util.List;
 
 import static project.NextStop.domain.schedule.entity.QSchedule.*;
 import static project.NextStop.domain.station.entity.QStation.*;
@@ -23,7 +15,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
         this.queryFactory = queryFactory;
     }
 
-    public Schedule findStationDetail(Long subwayId){
+    public Schedule getStationDetail(Long subwayId){
         return queryFactory
                 .selectFrom(schedule)
                 .join(schedule.subway, subway).fetchJoin()
@@ -33,4 +25,5 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
                 .where(schedule.subway.id.eq(subwayId))
                 .fetchOne();
     }
+
 }
