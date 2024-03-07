@@ -39,6 +39,7 @@ public class Station {
     @Column(nullable = false, precision = 21, scale = 18)
     private BigDecimal longitude;
 
+
     protected Station(){
 
     }
