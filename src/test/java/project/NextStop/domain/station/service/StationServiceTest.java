@@ -11,7 +11,7 @@ import project.NextStop.domain.exit.repository.ExitRepository;
 import project.NextStop.domain.schedule.entity.Schedule;
 import project.NextStop.domain.schedule.repository.ScheduleRepository;
 import project.NextStop.domain.station.entity.Station;
-import project.NextStop.domain.station.dto.StationDetailDto;
+import project.NextStop.domain.station.dto.StationDto;
 import project.NextStop.domain.station.entity.StationLine;
 import project.NextStop.domain.station.repository.StationLineRepository;
 import project.NextStop.domain.station.repository.StationRepository;
@@ -21,6 +21,8 @@ import project.NextStop.util.valuetype.Address;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
+
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -84,7 +86,7 @@ class StationServiceTest {
         em.flush();
         em.clear();
 
-        StationDetailDto stationDetail = stationService.findStationDetail(subway.getId());
-        System.out.println("stationDetail = " + stationDetail);
+        StationDto stationDetail = stationService.findStation(subway.getId());
+        assertThat(stationDetail.getStationName()).isEqualTo("성수");
     }
 }

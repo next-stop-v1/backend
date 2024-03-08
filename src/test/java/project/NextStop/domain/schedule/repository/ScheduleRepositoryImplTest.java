@@ -88,7 +88,8 @@ class ScheduleRepositoryImplTest {
         em.flush();
         em.clear();
 
-        Schedule findSchedule = scheduleRepository.getStationDetail(subway.getId());
+        List<Schedule> station = scheduleRepository.getStation(subway.getId());
+        Schedule findSchedule = station.get(0);
         System.out.println("schedule.getStationLine().getNext().getStation().getName() = " + findSchedule.getStationLine().getNext().getStation().getName());
         List<Exit> exits = findSchedule.getStationLine().getNext().getStation().getExits();
 
